@@ -104,3 +104,52 @@ exports.createPointUser = function _callee2(req, res) {
     }
   }, null, null, [[0, 14]]);
 };
+
+exports.deleteFormPoint = function _callee3(req, res) {
+  var point;
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(Point.findById(req.params.id));
+
+        case 3:
+          point = _context3.sent;
+
+          if (point) {
+            _context3.next = 6;
+            break;
+          }
+
+          return _context3.abrupt("return", res.status(404).json({
+            message: "Point not found"
+          }));
+
+        case 6:
+          _context3.next = 8;
+          return regeneratorRuntime.awrap(point.remove());
+
+        case 8:
+          // Remove the point from the database
+          res.status(200).json({
+            message: "Point deleted successfully"
+          });
+          _context3.next = 14;
+          break;
+
+        case 11:
+          _context3.prev = 11;
+          _context3.t0 = _context3["catch"](0);
+          res.status(400).json({
+            message: _context3.t0.message
+          });
+
+        case 14:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 11]]);
+};

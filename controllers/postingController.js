@@ -92,7 +92,7 @@ const confirmPost = async (req, res) => {
       return;
     }
 
-    posting.status = "pending";
+    posting.status = "published";
     posting.invoiceId = hoaDonId;
 
     const updatePost = await posting.save();

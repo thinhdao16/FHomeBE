@@ -29,14 +29,14 @@ exports.createPointUser = async (req, res) => {
                 messages: "This post has already been pointed by the user",
             });
         }
-    
+
         const point = new Point({
             user: userId,
             point: pointId,
         });
-    
+
         await point.save();
-    
+
         res.status(201).json({
             status: "Success",
             messages: "Point post created successfully!",
@@ -48,4 +48,16 @@ exports.createPointUser = async (req, res) => {
             messages: err.message,
         });
     }
-}    
+}
+exports.deleteFormPoint = async (req, res) => {
+    try {
+        const point = await Point.findById(req.params.id);
+        if (!point) {
+            return res.status(404).json({ message: "Point not found" });
+        }
+        await point.remove(); // Remove the point from the database
+        res.status(200).json({ message: "Point deleted successfully" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};

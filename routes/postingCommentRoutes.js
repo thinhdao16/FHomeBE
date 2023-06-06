@@ -21,4 +21,5 @@ router.get(
   authenticate,
   postingCommentController.getAllPostingComment
 );
+
 module.exports = router;

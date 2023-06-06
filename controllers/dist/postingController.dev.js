@@ -143,7 +143,7 @@ var confirmPost = function confirmPost(req, res) {
           return _context2.abrupt("return");
 
         case 18:
-          posting.status = "pending";
+          posting.status = "published";
           posting.invoiceId = hoaDonId;
           _context2.next = 22;
           return regeneratorRuntime.awrap(posting.save());
