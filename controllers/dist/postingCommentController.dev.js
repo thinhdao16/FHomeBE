@@ -144,54 +144,8 @@ var getAllPostingComment = function getAllPostingComment(req, res) {
   }, null, null, [[0, 7]]);
 };
 
-var getCommentById = function getCommentById(req, res) {
-  var postingCommentId, comment;
-  return regeneratorRuntime.async(function getCommentById$(_context4) {
-    while (1) {
-      switch (_context4.prev = _context4.next) {
-        case 0:
-          postingCommentId = req.params.id;
-          _context4.prev = 1;
-          _context4.next = 4;
-          return regeneratorRuntime.awrap(PostingComments.find({
-            posting: postingCommentId
-          }));
-
-        case 4:
-          comment = _context4.sent;
-
-          if (comment) {
-            _context4.next = 7;
-            break;
-          }
-
-          return _context4.abrupt("return", res.status(404).json({
-            message: "Comment not found"
-          }));
-
-        case 7:
-          res.status(200).json(comment);
-          _context4.next = 13;
-          break;
-
-        case 10:
-          _context4.prev = 10;
-          _context4.t0 = _context4["catch"](1);
-          res.status(500).json({
-            message: _context4.t0.message
-          });
-
-        case 13:
-        case "end":
-          return _context4.stop();
-      }
-    }
-  }, null, null, [[1, 10]]);
-};
-
 module.exports = {
   createPostingComment: createPostingComment,
   getAllPostingCommentByPost: getAllPostingCommentByPost,
-  getAllPostingComment: getAllPostingComment,
-  getCommentById: getCommentById
+  getAllPostingComment: getAllPostingComment
 };

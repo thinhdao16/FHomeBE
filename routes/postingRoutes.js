@@ -2,6 +2,7 @@ const express = require("express");
 const postingController = require("../controllers/postingController");
 const authenticate = require("../middlewares/authenticate");
 const uploadImage = require("../middlewares/uploadImage");
+const uploadImgs = require("../middlewares/uploadImgs");
 const router = express.Router();
 //create post
 router.post(
@@ -36,7 +37,6 @@ router.put("/confirm/:id", authenticate, postingController.confirmPost);
 router.put("/approve/:id", authenticate, postingController.approvedPost);
 // delete post
 router.delete("/delete/:id", authenticate, postingController.deletePost);
-
 
 //setPosting thành approved
 

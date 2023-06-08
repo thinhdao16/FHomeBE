@@ -8,6 +8,8 @@ var authenticate = require("../middlewares/authenticate");
 
 var uploadImage = require("../middlewares/uploadImage");
 
+var uploadImgs = require("../middlewares/uploadImgs");
+
 var router = express.Router(); //create post
 
 router.post("/create", authenticate, uploadImage, postingController.createPosting); // get user post
