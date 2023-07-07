@@ -7,8 +7,13 @@ const PointSchema = new mongoose.Schema(
             ref: "Users",
         },
         point: {
-            type: Number, min :0
-        }
+            type: Number, min: 0
+        },
+        status: {
+            type: String,
+            enum: [ "approved", "rejected", "pending"],
+            default: "pending",
+        },
     },
     { timestamps: true }
 );

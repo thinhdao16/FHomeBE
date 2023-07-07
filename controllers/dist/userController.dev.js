@@ -198,7 +198,7 @@ exports.updateUser = function _callee4(req, res) {
 
 
 exports.updatePointUser = function _callee5(req, res) {
-  var userId, user, pointsToAdd, pointId, updatedUser;
+  var userId, user, pointsToAdd, pointId, point, updatedUser;
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
@@ -229,36 +229,53 @@ exports.updatePointUser = function _callee5(req, res) {
           pointId = req.body.pointId; // Lấy ID của "point" từ body của yêu cầu
 
           if (!pointId) {
-            _context5.next = 12;
+            _context5.next = 18;
             break;
           }
 
           _context5.next = 12;
-          return regeneratorRuntime.awrap(Point.findByIdAndDelete(pointId));
+          return regeneratorRuntime.awrap(Point.findById(pointId));
 
         case 12:
-          _context5.next = 14;
-          return regeneratorRuntime.awrap(user.save());
+          point = _context5.sent;
 
-        case 14:
-          updatedUser = _context5.sent;
-          res.status(200).json(updatedUser);
-          _context5.next = 21;
-          break;
+          if (point) {
+            _context5.next = 15;
+            break;
+          }
+
+          return _context5.abrupt("return", res.status(404).json({
+            message: "Point not found"
+          }));
+
+        case 15:
+          point.status = "approved";
+          _context5.next = 18;
+          return regeneratorRuntime.awrap(point.save());
 
         case 18:
-          _context5.prev = 18;
+          _context5.next = 20;
+          return regeneratorRuntime.awrap(user.save());
+
+        case 20:
+          updatedUser = _context5.sent;
+          res.status(200).json(updatedUser);
+          _context5.next = 27;
+          break;
+
+        case 24:
+          _context5.prev = 24;
           _context5.t0 = _context5["catch"](0);
           res.status(400).json({
             message: _context5.t0.message
           });
 
-        case 21:
+        case 27:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[0, 18]]);
+  }, null, null, [[0, 24]]);
 }; //gửi điểm để admin xác nhận 
 
 

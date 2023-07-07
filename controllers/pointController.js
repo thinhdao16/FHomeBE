@@ -22,7 +22,7 @@ exports.createPointUser = async (req, res) => {
         const pointId = req.body.point; // Thay "point" bằng tên trường từ form
 
 
-        const existingPoint = await Point.findOne({ user: userId, point: pointId });
+        const existingPoint = await Point.findOne({ user: userId, point: pointId, status: "pending" });
         if (existingPoint) {
             return res.status(400).json({
                 status: "Fail",
@@ -49,6 +49,20 @@ exports.createPointUser = async (req, res) => {
         });
     }
 }
+exports.rejectedPoint = async (req, res) => {
+    try {
+        const point = await Point.findById(req.params.id);
+        if (!point) {
+            return res.status(404).json({ message: "Point not found" });
+        }
+        point.status = "rejected";
+        await point.save(); // Lưu lại điểm đã chỉnh sửa
+        res.status(200).json({ message: "Point status updated to rejected" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 exports.deleteFormPoint = async (req, res) => {
     try {
         const point = await Point.findById(req.params.id);

@@ -96,19 +96,25 @@ exports.updatePointUser = async (req, res) => {
       const pointsToAdd = parseInt(req.body.point);
       user.point += pointsToAdd;
     }
+    
     const pointId = req.body.pointId; // Lấy ID của "point" từ body của yêu cầu
     if (pointId) {
-      await Point.findByIdAndDelete(pointId);
+      const point = await Point.findById(pointId);
+      if (!point) {
+        return res.status(404).json({ message: "Point not found" });
+      }
+      point.status = "approved";
+      await point.save();
     }
 
     const updatedUser = await user.save();
-
 
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 
 //gửi điểm để admin xác nhận 

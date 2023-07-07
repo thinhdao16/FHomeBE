@@ -54,7 +54,8 @@ exports.createPointUser = function _callee2(req, res) {
           _context2.next = 5;
           return regeneratorRuntime.awrap(Point.findOne({
             user: userId,
-            point: pointId
+            point: pointId,
+            status: "pending"
           }));
 
         case 5:
@@ -105,7 +106,7 @@ exports.createPointUser = function _callee2(req, res) {
   }, null, null, [[0, 14]]);
 };
 
-exports.deleteFormPoint = function _callee3(req, res) {
+exports.rejectedPoint = function _callee3(req, res) {
   var point;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
@@ -128,7 +129,57 @@ exports.deleteFormPoint = function _callee3(req, res) {
           }));
 
         case 6:
-          _context3.next = 8;
+          point.status = "rejected";
+          _context3.next = 9;
+          return regeneratorRuntime.awrap(point.save());
+
+        case 9:
+          // Lưu lại điểm đã chỉnh sửa
+          res.status(200).json({
+            message: "Point status updated to rejected"
+          });
+          _context3.next = 15;
+          break;
+
+        case 12:
+          _context3.prev = 12;
+          _context3.t0 = _context3["catch"](0);
+          res.status(400).json({
+            message: _context3.t0.message
+          });
+
+        case 15:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 12]]);
+};
+
+exports.deleteFormPoint = function _callee4(req, res) {
+  var point;
+  return regeneratorRuntime.async(function _callee4$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.prev = 0;
+          _context4.next = 3;
+          return regeneratorRuntime.awrap(Point.findById(req.params.id));
+
+        case 3:
+          point = _context4.sent;
+
+          if (point) {
+            _context4.next = 6;
+            break;
+          }
+
+          return _context4.abrupt("return", res.status(404).json({
+            message: "Point not found"
+          }));
+
+        case 6:
+          _context4.next = 8;
           return regeneratorRuntime.awrap(point.remove());
 
         case 8:
@@ -136,19 +187,19 @@ exports.deleteFormPoint = function _callee3(req, res) {
           res.status(200).json({
             message: "Point deleted successfully"
           });
-          _context3.next = 14;
+          _context4.next = 14;
           break;
 
         case 11:
-          _context3.prev = 11;
-          _context3.t0 = _context3["catch"](0);
+          _context4.prev = 11;
+          _context4.t0 = _context4["catch"](0);
           res.status(400).json({
-            message: _context3.t0.message
+            message: _context4.t0.message
           });
 
         case 14:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
     }
   }, null, null, [[0, 11]]);
