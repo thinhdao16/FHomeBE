@@ -29,6 +29,8 @@ var pointRoutes = require("./routes/pointRoutes");
 
 var testRoutes = require("./routes/testRoute");
 
+var imageRoutes = require("./routes/imageRoutes");
+
 app.use(cors()); // Set up Swagger UI
 
 var swaggerUi = require("swagger-ui-express");
@@ -53,7 +55,8 @@ app.use("/", notiRoutes);
 app.use("/", postingCommentRoutes);
 app.use("/", favouriteRoutes);
 app.use("/", pointRoutes);
-app.use("/test", testRoutes); // Set up error handling middleware
+app.use("/test", testRoutes);
+app.use("/", imageRoutes); // Set up error handling middleware
 // app.use(errorHandler);
 
 module.exports = app;

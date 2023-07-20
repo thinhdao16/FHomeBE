@@ -52,4 +52,7 @@ router.get("/countUser", userController.countUsers);
 //plus point user
 router.put("/pointplus/:id", authenticate, userController.updatePointUser)
 
+
+
+
 module.exports = router;

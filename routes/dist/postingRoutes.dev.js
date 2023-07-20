@@ -50,5 +50,7 @@ router.get("/today", postingController.countPostsToday);
 router.get("/year", postingController.countPostsByYear); // query (year, month, date , status) cái nào ko truyền thì lấy hết
 //exp: ko truyền status --> lấy hết status ; ko truyền date --> lấy hết post theo year&month,...
 
-router.get("/count", postingController.countPosts);
+router.get("/count", postingController.countPosts); // upload image
+
+router.post("/userImageCheck", uploadImage, postingController.createPosting);
 module.exports = router;

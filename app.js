@@ -13,7 +13,7 @@ const postingCommentRoutes = require("./routes/postingCommentRoutes");
 const favouriteRoutes = require("./routes/favouriteRoutes");
 const pointRoutes = require("./routes/pointRoutes")
 const testRoutes = require("./routes/testRoute");
-
+const imageRoutes = require("./routes/imageRoutes")
 app.use(cors());
 
 // Set up Swagger UI
@@ -40,7 +40,7 @@ app.use("/", postingCommentRoutes);
 app.use("/", favouriteRoutes);
 app.use("/", pointRoutes)
 app.use("/test", testRoutes);
-
+app.use("/", imageRoutes)
 
 // Set up error handling middleware
 // app.use(errorHandler);
