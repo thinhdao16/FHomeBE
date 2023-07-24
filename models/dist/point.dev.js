@@ -11,6 +11,12 @@ var PointSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
+  script: {
+    type: String
+  },
+  img: {
+    type: String
+  },
   status: {
     type: String,
     "enum": ["approved", "rejected", "pending"],

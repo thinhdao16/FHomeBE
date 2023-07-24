@@ -41,7 +41,7 @@ exports.getPoitn = function _callee(req, res) {
 };
 
 exports.createPointUser = function _callee2(req, res) {
-  var userId, pointId, existingPoint, point;
+  var userId, pointId, scriptPoint, imgPoint, existingPoint, point;
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -51,18 +51,22 @@ exports.createPointUser = function _callee2(req, res) {
 
           pointId = req.body.point; // Thay "point" bằng tên trường từ form
 
-          _context2.next = 5;
+          scriptPoint = req.body.script;
+          imgPoint = req.body.img;
+          _context2.next = 7;
           return regeneratorRuntime.awrap(Point.findOne({
             user: userId,
             point: pointId,
+            script: scriptPoint,
+            img: imgPoint,
             status: "pending"
           }));
 
-        case 5:
+        case 7:
           existingPoint = _context2.sent;
 
           if (!existingPoint) {
-            _context2.next = 8;
+            _context2.next = 10;
             break;
           }
 
@@ -71,15 +75,17 @@ exports.createPointUser = function _callee2(req, res) {
             messages: "This post has already been pointed by the user"
           }));
 
-        case 8:
+        case 10:
           point = new Point({
             user: userId,
-            point: pointId
+            point: pointId,
+            script: scriptPoint,
+            img: imgPoint
           });
-          _context2.next = 11;
+          _context2.next = 13;
           return regeneratorRuntime.awrap(point.save());
 
-        case 11:
+        case 13:
           res.status(201).json({
             status: "Success",
             messages: "Point post created successfully!",
@@ -87,23 +93,23 @@ exports.createPointUser = function _callee2(req, res) {
               point: point
             }
           });
-          _context2.next = 17;
+          _context2.next = 19;
           break;
 
-        case 14:
-          _context2.prev = 14;
+        case 16:
+          _context2.prev = 16;
           _context2.t0 = _context2["catch"](0);
           res.status(500).json({
             status: "Fail",
             messages: _context2.t0.message
           });
 
-        case 17:
+        case 19:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 14]]);
+  }, null, null, [[0, 16]]);
 };
 
 exports.rejectedPoint = function _callee3(req, res) {

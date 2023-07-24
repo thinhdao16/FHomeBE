@@ -9,9 +9,13 @@ const PointSchema = new mongoose.Schema(
         point: {
             type: Number, min: 0
         },
+        script: {
+            type: String,
+        },
+        img: { type: String, },
         status: {
             type: String,
-            enum: [ "approved", "rejected", "pending"],
+            enum: ["approved", "rejected", "pending"],
             default: "pending",
         },
     },
