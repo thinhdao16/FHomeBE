@@ -56,9 +56,6 @@ exports.createPointUser = function _callee2(req, res) {
           _context2.next = 7;
           return regeneratorRuntime.awrap(Point.findOne({
             user: userId,
-            point: pointId,
-            script: scriptPoint,
-            img: imgPoint,
             status: "pending"
           }));
 

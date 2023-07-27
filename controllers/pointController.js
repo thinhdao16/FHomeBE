@@ -22,7 +22,7 @@ exports.createPointUser = async (req, res) => {
         const pointId = req.body.point; // Thay "point" bằng tên trường từ form
         const scriptPoint = req.body.script;
         const imgPoint = req.body.img;
-        const existingPoint = await Point.findOne({ user: userId, point: pointId, script: scriptPoint, img:imgPoint,status: "pending" });
+        const existingPoint = await Point.findOne({ user: userId,status: "pending" });
         if (existingPoint) {
             return res.status(400).json({
                 status: "Fail",
