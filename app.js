@@ -14,6 +14,7 @@ const favouriteRoutes = require("./routes/favouriteRoutes");
 const pointRoutes = require("./routes/pointRoutes")
 const testRoutes = require("./routes/testRoute");
 const imageRoutes = require("./routes/imageRoutes")
+const contractRoutes = require("./routes/contractRoutes")
 app.use(cors());
 
 // Set up Swagger UI
@@ -41,6 +42,7 @@ app.use("/", favouriteRoutes);
 app.use("/", pointRoutes)
 app.use("/test", testRoutes);
 app.use("/", imageRoutes)
+app.use("/", contractRoutes)
 
 // Set up error handling middleware
 // app.use(errorHandler);
