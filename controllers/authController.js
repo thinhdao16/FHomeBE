@@ -118,7 +118,7 @@ const login = async (req, res) => {
         };
 
         await User.create(newUser);
-
+        const accessToken = createAccessToken(newUser);
 
         // const statusMail = "register"
         // await sendEmail(statusMail, newUser);
@@ -126,16 +126,34 @@ const login = async (req, res) => {
           status: "Fail",
           messages:
             "Your email domain is not supported. Please contact your administrator to support your account!",
+          accessToken, // Return null for accessToken in case of error
         });
       }
     }
   } catch (err) {
+    const payload = {
+      id: "",
+      fullname: "",
+      email: "",
+      phoneNumber: "",
+      img: "",
+      status: false,
+      roleName: "",
+    };
+
+    const accessToken = createAccessToken(payload);
+
     res.status(500).json({
       status: "Fail",
       messages: err.message,
+      data: {
+        user: payload,
+        accessToken,
+      },
     });
   }
 };
+
 
 module.exports = {
   login,

@@ -18,6 +18,7 @@ const PointSchema = new mongoose.Schema(
             enum: ["approved", "rejected", "pending"],
             default: "pending",
         },
+        email: { type: String, },
     },
     { timestamps: true }
 );

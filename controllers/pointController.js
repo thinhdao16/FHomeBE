@@ -16,13 +16,28 @@ exports.getPoitn = async (req, res) => {
         });
     }
 };
+exports.getPoitnEmail = async (req, res) => {
+    try {
+        const point = await Point.find()
+        res.status(200).json({
+            status: "Success",
+            messages: "Get favourite successfully!",
+            data: { point },
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: "Fail",
+            messages: err.message,
+        });
+    }
+};
 exports.createPointUser = async (req, res) => {
     try {
         const userId = req.user.id; // Thay "user" bằng tên trường từ form
         const pointId = req.body.point; // Thay "point" bằng tên trường từ form
         const scriptPoint = req.body.script;
         const imgPoint = req.body.img;
-        const existingPoint = await Point.findOne({ user: userId,status: "pending" });
+        const existingPoint = await Point.findOne({ user: userId, status: "pending" });
         if (existingPoint) {
             return res.status(400).json({
                 status: "Fail",
@@ -34,7 +49,41 @@ exports.createPointUser = async (req, res) => {
             user: userId,
             point: pointId,
             script: scriptPoint,
-            img:imgPoint,
+            img: imgPoint,
+        });
+        await point.save();
+
+        res.status(201).json({
+            status: "Success",
+            messages: "Point post created successfully!",
+            data: { point },
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: "Fail",
+            messages: err.message,
+        });
+    }
+}
+exports.createPointUserEmail = async (req, res) => {
+    try {
+        const pointId = req.body.point; // Thay "point" bằng tên trường từ form
+        const scriptPoint = req.body.script;
+        const imgPoint = req.body.img;
+        const emailPoint = req.body.email;
+        const existingPoint = await Point.findOne({ email: emailPoint, status: "pending" });
+        if (existingPoint) {
+            return res.status(400).json({
+                status: "Fail",
+                messages: "This post has already been pointed by the user",
+            });
+        }
+
+        const point = new Point({
+            point: pointId,
+            script: scriptPoint,
+            img: imgPoint,
+            email: emailPoint,
         });
         await point.save();
 
