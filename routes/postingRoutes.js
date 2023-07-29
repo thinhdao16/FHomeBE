@@ -33,6 +33,9 @@ router.put("/update/:id", authenticate, postingController.updatePosting);
 router.put("/reject/:id", authenticate, postingController.rejectPost);
 // confirm post
 router.put("/confirm/:id", authenticate, postingController.confirmPost);
+//confirm post lease
+router.put("/confirmLease/:id", authenticate, postingController.confirmPostLease);
+
 // approve post
 router.put("/approve/:id", authenticate, postingController.approvedPost);
 // delete post

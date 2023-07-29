@@ -20,7 +20,7 @@ router.get(
 // Lấy thông tin một người dùng
 router.get(
   "/users/:id",
-  authorize(["admin", "landlord"]),
+  authorize(["admin", "landlord","fptmember"]),
   userController.getUserById
 );
 router.get( "/userProfile/:id",  userController.getUserById);

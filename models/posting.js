@@ -14,6 +14,7 @@ const postSchema = new mongoose.Schema(
     userPosting: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     img: { type: String },
     invoiceId: { type: String },
+    type: { type: String, enum: ["share", "lease"] }
   },
   { timestamps: true }
 );

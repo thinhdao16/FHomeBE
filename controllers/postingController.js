@@ -27,6 +27,7 @@ const createPosting = async (req, res) => {
       rooms: req.body.rooms,
       userPosting: req.user.id,
       img: req.body.img,
+      type: req.body.type,
     });
 
     // Save the post to the database
@@ -99,6 +100,76 @@ const confirmPost = async (req, res) => {
 
     if (user.point > 0) {
       user.point -= 1;
+    }
+    await user.save();
+
+    const statusMail = "confirm";
+    const link = "";
+    await sendEmail(statusMail, posting, link);
+    sendNotification();
+
+    res.status(200).json({
+      message: "Update successful, Please wait for admin to approve",
+      data: {
+        post: updatePost,
+        user: user
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+};
+
+const confirmPostLease = async (req, res) => {
+  const user = await Users.findById(req.user.id);
+
+  if (user.phoneNumber.length <= 0) {
+    res.status(500).json({
+      message: "Please update your phone number!",
+    });
+    return;
+  }
+
+  const hoadon = await paypal.createDraftInvoice(
+    user.fullname,
+    user.email,
+    user.phoneNumber
+  );
+
+  const hoaDonId = hoadon.href.split("/")[6];
+
+  const posting = await Postings.findById(req.params.id).populate(
+    "userPosting"
+  );
+
+  if (!posting) {
+    res.status(404).json({
+      message: "Not found post",
+    });
+  }
+
+  try {
+    if (
+      posting.status == "approved" ||
+      posting.status == "pending" ||
+      posting.status == "published"
+    ) {
+      res.status(200).json({
+        message: "Only draft post can do this. Please check again",
+      });
+      return;
+    }
+
+    posting.status = "published";
+    posting.invoiceId = hoaDonId;
+
+    const updatePost = await posting.save();
+
+    if (user.point > 4) {
+      user.point -= 5;
     }
     await user.save();
 
@@ -613,5 +684,6 @@ module.exports = {
   countPosts,
   //
   setPosting,
-  setPostingPublished
+  setPostingPublished,
+  confirmPostLease,
 };

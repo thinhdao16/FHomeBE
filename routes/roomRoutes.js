@@ -14,7 +14,7 @@ router.post('/createRooms', authenticate, uploadImages, roomController.createRoo
 router.get('/getRooms', roomController.getAllRooms);
 
 //get by userId
-router.get('/getRoomsByUserId', authenticate, authorize(['landlord']), roomController.getRoomsByUserId);
+router.get('/getRoomsByUserId', authenticate, authorize(['landlord',"fptmember"]), roomController.getRoomsByUserId);
 
 //
 router.put('/updateRoom/:id',roomController.updateRoomById)
